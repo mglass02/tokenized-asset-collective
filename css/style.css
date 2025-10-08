@@ -119,3 +119,59 @@ footer {
   font-size: 0.9rem;
   color: #777;
 }
+
+/* Services Page Styling */
+body.services-page main {
+  max-width: 800px;
+  margin: 3rem auto;
+  padding: 0 1rem;
+}
+
+.services-section {
+  background-color: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 10px;
+  padding: 2rem 1.5rem;
+  margin-bottom: 2.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.services-section h2 {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #111;
+  border-bottom: 2px solid #007acc;
+  display: inline-block;
+  padding-bottom: 0.25rem;
+}
+
+.services-list {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 0;
+}
+
+.services-list li {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 0.8rem;
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.services-list li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #007acc;
+  font-weight: bold;
+}
+
+.education {
+  border-left: 4px solid #007acc;
+}
+
+.advisory {
+  border-left: 4px solid #ff6600;
+}
