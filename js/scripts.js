@@ -3,17 +3,20 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Highlight active nav link
   // ----------------------------
   const navLinks = document.querySelectorAll('header nav a');
-  let currentPage = window.location.pathname.split("/").pop(); // get last segment
+  const pathSegments = window.location.pathname.split("/").filter(Boolean);
+  let currentPage = pathSegments[pathSegments.length - 1]; // last segment
 
-  // Handle root
-  if (!currentPage) currentPage = "index.html";
+  // Treat root
+  if (!currentPage || currentPage === "index.html") currentPage = "index.html";
 
-  // Highlight Blog link for any page under /blog/
+  // Treat any blog post as blog.html
+  if (pathSegments.includes("blog")) currentPage = "blog.html";
+
   navLinks.forEach(link => {
-    const href = link.getAttribute('href');
-    if (href === currentPage) {
-      link.classList.add('active');
-    } else if (href === "blog.html" && window.location.pathname.includes("/blog/")) {
+    // Convert href to just the filename
+    const linkHref = link.getAttribute('href').split("/").pop();
+
+    if (linkHref === currentPage) {
       link.classList.add('active');
     } else {
       link.classList.remove('active');
@@ -27,7 +30,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (!blogContainer) return;
 
   try {
-    const response = await fetch("blog/posts.json", { cache: "no-store" });
+    const response = await fetch("/blog/posts.json", { cache: "no-store" });
     if (!response.ok) throw new Error(`Failed to fetch posts.json (status ${response.status})`);
 
     const posts = await response.json();
@@ -49,7 +52,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       article.style.transition = "opacity .36s ease, transform .36s ease";
 
       article.innerHTML = `
-        <h2><a href="blog/${post.slug}">${title}</a></h2>
+        <h2><a href="/blog/${post.slug}">${title}</a></h2>
         <p class="date">${date}</p>
       `;
 
