@@ -1,12 +1,14 @@
 document.addEventListener("DOMContentLoaded", async () => {
-  // ----------------------------
-  // Ensure nav always highlights the current page
-  // ----------------------------
   const navLinks = document.querySelectorAll('header nav a');
-  let currentPage = window.location.pathname.split("/").pop(); // get filename
+  let currentPage = window.location.pathname.split("/").pop(); // get last segment
 
-  // GitHub Pages serves '/' as index.html
+  // Handle root
   if (!currentPage) currentPage = "index.html";
+
+  // Normalize blog paths
+  if (window.location.pathname.includes("/blog/")) {
+    currentPage = "blog.html"; // treat any /blog/ path as blog.html
+  }
 
   navLinks.forEach(link => {
     if (link.getAttribute('href') === currentPage) {
