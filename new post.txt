@@ -1,0 +1,4 @@
+Add post to blog
+
+run node build.js
+

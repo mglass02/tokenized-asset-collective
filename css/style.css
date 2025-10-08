@@ -1,0 +1,121 @@
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@300;400;500&display=swap');
+
+:root {
+  --bg: #fafafa;
+  --text: #111;
+  --accent: #000;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  color: var(--text);
+  background-color: var(--bg);
+  margin: 0;
+  padding: 0;
+  line-height: 1.7;
+  letter-spacing: 0.01em;
+}
+
+header {
+  text-align: center;
+  padding: 5rem 1rem 3rem;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+header h1 {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 4rem;
+  margin: 0;
+}
+
+header p {
+  font-size: 1.25rem;
+  color: #555;
+  font-weight: 400;
+}
+
+nav {
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+nav a {
+  margin: 0 1rem;
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+nav a:hover {
+  border-bottom: 1px solid var(--accent);
+}
+
+main {
+  max-width: 700px;
+  margin: 3rem auto;
+  padding: 0 1rem;
+}
+
+/* Blog post styling */
+/* Post header styling (fits better with blog) */
+.post-header {
+  max-width: 700px;
+  margin: 2rem auto 3rem;
+  padding: 0 1rem;
+}
+
+.post-header h1 {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 2rem; /* slightly smaller than main header */
+  line-height: 1.3;
+  margin: 0 0 0.5rem;
+  color: #111;
+}
+
+.post-header .byline {
+  font-size: 0.95rem;
+  color: #666;
+  margin: 0;
+  font-weight: 400;
+}
+
+
+.blog-post {
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 1rem;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity .36s ease, transform .36s ease;
+}
+
+.blog-post h2 {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 1.5rem; /* smaller title */
+  margin: 0.2rem 0;
+}
+
+.blog-post h2 a {
+  color: #333; /* dark gray link */
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.blog-post h2 a:hover {
+  color: #007acc;
+  text-decoration: underline;
+}
+
+.blog-post .date {
+  font-size: 0.9rem;
+  color: #666;
+  margin: 0;
+}
+
+footer {
+  text-align: center;
+  border-top: 1px solid #e5e5e5;
+  padding: 2rem 0;
+  font-size: 0.9rem;
+  color: #777;
+}
