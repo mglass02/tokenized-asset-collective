@@ -1,13 +1,18 @@
 document.addEventListener("DOMContentLoaded", async () => {
   // ----------------------------
-  // Highlight active nav link
+  // Ensure nav always highlights the current page
   // ----------------------------
   const navLinks = document.querySelectorAll('header nav a');
-  const currentPage = window.location.pathname.split("/").pop(); // get filename
+  let currentPage = window.location.pathname.split("/").pop(); // get filename
+
+  // GitHub Pages serves '/' as index.html
+  if (!currentPage) currentPage = "index.html";
 
   navLinks.forEach(link => {
     if (link.getAttribute('href') === currentPage) {
       link.classList.add('active');
+    } else {
+      link.classList.remove('active');
     }
   });
 
