@@ -1,17 +1,19 @@
 document.addEventListener("DOMContentLoaded", async () => {
+  // ----------------------------
+  // Highlight active nav link
+  // ----------------------------
   const navLinks = document.querySelectorAll('header nav a');
   let currentPage = window.location.pathname.split("/").pop(); // get last segment
 
   // Handle root
   if (!currentPage) currentPage = "index.html";
 
-  // Normalize blog paths
-  if (window.location.pathname.includes("/blog/")) {
-    currentPage = "blog.html"; // treat any /blog/ path as blog.html
-  }
-
+  // Highlight Blog link for any page under /blog/
   navLinks.forEach(link => {
-    if (link.getAttribute('href') === currentPage) {
+    const href = link.getAttribute('href');
+    if (href === currentPage) {
+      link.classList.add('active');
+    } else if (href === "blog.html" && window.location.pathname.includes("/blog/")) {
       link.classList.add('active');
     } else {
       link.classList.remove('active');
