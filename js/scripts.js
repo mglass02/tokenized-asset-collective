@@ -1,15 +1,28 @@
 document.addEventListener("DOMContentLoaded", async () => {
+  // ----------------------------
+  // Highlight active nav link
+  // ----------------------------
+  const navLinks = document.querySelectorAll('header nav a');
+  const currentPage = window.location.pathname.split("/").pop(); // get filename
+
+  navLinks.forEach(link => {
+    if (link.getAttribute('href') === currentPage) {
+      link.classList.add('active');
+    }
+  });
+
+  // ----------------------------
+  // Blog posts loading
+  // ----------------------------
   const blogContainer = document.getElementById("blog-container");
   if (!blogContainer) return;
 
   try {
-    // fetch the generated posts.json inside the blog folder
     const response = await fetch("blog/posts.json", { cache: "no-store" });
     if (!response.ok) throw new Error(`Failed to fetch posts.json (status ${response.status})`);
 
     const posts = await response.json();
-
-    blogContainer.innerHTML = ""; // clear loading message
+    blogContainer.innerHTML = "";
 
     if (!Array.isArray(posts) || posts.length === 0) {
       blogContainer.innerHTML = "<p>No posts found.</p>";
@@ -17,13 +30,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     posts.forEach((post, idx) => {
-      // Basic validation / fallbacks
       const title = post.title || post.slug || "Untitled";
       const date = post.date || "";
 
       const article = document.createElement("article");
       article.className = "blog-post";
-      // subtle entrance animation
       article.style.opacity = "0";
       article.style.transform = "translateY(6px)";
       article.style.transition = "opacity .36s ease, transform .36s ease";
@@ -35,7 +46,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       blogContainer.appendChild(article);
 
-      // Staggered reveal for a nicer feel
       requestAnimationFrame(() => {
         setTimeout(() => {
           article.style.opacity = "1";
