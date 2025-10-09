@@ -1,4 +1,5 @@
-Add post to blog
+Add post to blog folder 
 
-run node build.js
+Add link to blog file 
+
 
