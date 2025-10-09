@@ -13,9 +13,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (pathSegments.includes("blog")) currentPage = "blog.html";
 
   navLinks.forEach(link => {
-    // Convert href to just the filename
     const linkHref = link.getAttribute('href').split("/").pop();
-
     if (linkHref === currentPage) {
       link.classList.add('active');
     } else {
@@ -30,7 +28,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (!blogContainer) return;
 
   try {
-    const response = await fetch("/blog/posts.json", { cache: "no-store" });
+    // ✅ Use relative path for GitHub Pages compatibility
+    const response = await fetch("blog/posts.json", { cache: "no-store" });
     if (!response.ok) throw new Error(`Failed to fetch posts.json (status ${response.status})`);
 
     const posts = await response.json();
@@ -51,8 +50,9 @@ document.addEventListener("DOMContentLoaded", async () => {
       article.style.transform = "translateY(6px)";
       article.style.transition = "opacity .36s ease, transform .36s ease";
 
+      // ✅ Relative link for GitHub Pages (no leading slash)
       article.innerHTML = `
-        <h2><a href="/blog/${post.slug}">${title}</a></h2>
+        <h2><a href="blog/${post.slug}">${title}</a></h2>
         <p class="date">${date}</p>
       `;
 
