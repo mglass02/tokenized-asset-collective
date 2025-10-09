@@ -79,7 +79,6 @@ main {
   font-weight: 400;
 }
 
-
 .blog-post {
   margin-bottom: 2rem;
   border-bottom: 1px solid #ddd;
@@ -87,6 +86,7 @@ main {
   opacity: 0;
   transform: translateY(6px);
   transition: opacity .36s ease, transform .36s ease;
+  color: black;
 }
 
 .blog-post h2 {
