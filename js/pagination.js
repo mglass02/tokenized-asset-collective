@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Previous button
     const prev = document.createElement("button");
-    prev.textContent = "Previous";
+    prev.textContent = "<";
     prev.disabled = page === 1;
     prev.onclick = () => showPage(page - 1);
     pagination.appendChild(prev);
@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Next button
     const next = document.createElement("button");
-    next.textContent = "Next";
+    next.textContent = ">";
     next.disabled = page === totalPages;
     next.onclick = () => showPage(page + 1);
     pagination.appendChild(next);
