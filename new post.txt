@@ -3,3 +3,5 @@ Add post to blog folder
 Add link to blog file 
 
 
+TO DO 
+ * Set blog to pages with 5 blogs on each page 
