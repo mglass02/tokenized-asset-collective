@@ -62,7 +62,7 @@ nav a.active {
 }
 
 .hero h2 {
-  font-family: 'Libre Baskerville', serif;
+  font-family: 'Inter', sans-serif;
   font-size: 2.2rem;
   color: var(--text);
   margin-bottom: 1.2rem;
