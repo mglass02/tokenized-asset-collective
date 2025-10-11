@@ -18,7 +18,7 @@ body {
 
 header {
   text-align: center;
-  padding: 5rem 1rem 3rem;
+  padding: 3rem 1rem 3rem;
   border-bottom: 1px solid #e5e5e5;
 }
 
@@ -109,6 +109,41 @@ main {
   font-size: 0.9rem;
   color: #666;
   margin: 0;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 2rem 0 4rem;
+  font-family: 'Courier New', monospace;
+  font-size: 1.1rem;
+  color: #111;
+}
+
+.pagination button {
+  background: none;
+  border: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  padding: 0.2rem 0.4rem;
+  transition: opacity 0.2s ease;
+}
+
+.pagination button:hover {
+  opacity: 0.6;
+}
+
+.pagination button.active {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.pagination button:disabled {
+  opacity: 0.3;
+  cursor: default;
 }
 
 footer {
@@ -227,39 +262,4 @@ body.services-page main {
   .services-section h3 {
     font-size: 1.8rem;
   }
-}
-
-.pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.6rem;
-  margin: 2rem 0 4rem;
-  font-family: 'Courier New', monospace;
-  font-size: 1.1rem;
-  color: #111;
-}
-
-.pagination button {
-  background: none;
-  border: none;
-  color: inherit;
-  font: inherit;
-  cursor: pointer;
-  padding: 0.2rem 0.4rem;
-  transition: opacity 0.2s ease;
-}
-
-.pagination button:hover {
-  opacity: 0.6;
-}
-
-.pagination button.active {
-  font-weight: bold;
-  text-decoration: underline;
-}
-
-.pagination button:disabled {
-  opacity: 0.3;
-  cursor: default;
 }
