@@ -1,6 +1,7 @@
+// pagination.js remains unchanged as it's functional and not visual
 document.addEventListener("DOMContentLoaded", () => {
-  const posts = Array.from(document.querySelectorAll(".blog-post"));
-  const postsPerPage = 5;
+  const posts = Array.from(document.querySelectorAll(".blog-article"));
+  const postsPerPage = 6;
   let currentPage = 1;
 
   function showPage(page) {

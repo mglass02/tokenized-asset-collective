@@ -1,3 +1,4 @@
+// scripts.js remains unchanged as it's functional and not visual
 document.addEventListener("DOMContentLoaded", () => {
   // Highlight current nav link
   const navLinks = document.querySelectorAll("header nav a");
