@@ -45,81 +45,66 @@ body {
 }
 
 .site-header {
-  position: relative;
-  text-align: center;
-  padding: 5rem 2rem 4rem;
-  background: var(--background-color);
-  border-bottom: none;
-  box-shadow: var(--shadow-soft);
-  animation: var(--animation-fade);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: white;
+  padding: 1.2rem 3rem;
+  transition: background 0.4s ease, box-shadow 0.4s ease;
+  border-bottom: 1px solid transparent;
 }
 
-.site-header::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: var(--accent-gradient);
-  background-size: 200% 200%;
-  animation: gradientShift 5s ease infinite;
-  opacity: 0.3;
+.site-header.scrolled {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .header-container {
-  max-width: 1200px;
+  max-width: 1440px;
   margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .logo {
-  font-size: 3rem;
-  font-weight: 600;
-  letter-spacing: -0.05rem;
-  margin-bottom: 0.75rem;
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 300;
+  letter-spacing: -0.01rem;
+  margin: 0;
+  color: var(--text-color);
+  transition: opacity 0.3s ease;
 }
 
-.subtitle {
-  font-size: 1.2rem;
-  color: var(--secondary-color);
-  font-weight: 300;
-  margin-bottom: 2.5rem;
+.logo:hover {
+  opacity: 0.8;
 }
 
 .navigation {
   display: flex;
-  justify-content: center;
   gap: 2.5rem;
 }
 
 .navigation a {
-  color: var(--text-color);
+  color: var(--secondary-color);
   text-decoration: none;
-  font-weight: 500;
-  font-size: 1.1rem;
-  position: relative;
-  transition: var(--transition-smooth);
-}
-
-.navigation a::after {
-  content: '';
-  position: absolute;
-  bottom: -0.5rem;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: var(--accent-gradient);
-  transition: var(--transition-smooth);
-}
-
-.navigation a:hover::after,
-.navigation a.active::after {
-  width: 100%;
+  font-weight: 400;
+  font-size: 1rem;
+  transition: color 0.3s ease, transform 0.3s ease;
 }
 
 .navigation a:hover,
 .navigation a.active {
-  color: var(--primary-color);
+  color: var(--text-color);
+  transform: translateY(-1px);
+}
+
+.subtitle {
+  display: none;
 }
 
 .main-content {
