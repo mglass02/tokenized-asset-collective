@@ -1,0 +1,90 @@
+/* === Vision Page Styling (Optimized Spacing) === */
+
+.vision-main {
+  max-width: 850px;
+  margin: 2rem auto 3rem;
+  padding: 0 1.25rem;
+  text-align: center;
+  position: relative;
+}
+
+.vision-hero {
+  margin-bottom: 2rem;
+}
+
+.vision-title {
+  font-size: 2rem;
+  color: var(--primary-color);
+  text-shadow: 0 0 12px rgba(0,255,255,0.5);
+  margin-bottom: 0.4rem;
+}
+
+.vision-subtitle {
+  color: var(--text-color);
+  font-size: 1.05rem;
+  opacity: 0.9;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.vision-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem; /* tighter spacing between sections */
+  position: relative;
+  padding-left: 0.5rem;
+}
+
+.vision-block {
+  background: rgba(15,15,15,0.95);
+  border: 1px solid rgba(0,255,255,0.12);
+  border-radius: 10px;
+  padding: 1.5rem 1.5rem;
+  box-shadow: 0 0 18px rgba(0,255,255,0.06);
+  text-align: left;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.vision-block:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 22px rgba(0,255,255,0.22);
+}
+
+.vision-block h3 {
+  color: var(--primary-color);
+  font-size: 1.25rem;
+  margin-bottom: 0.6rem;
+  text-shadow: 0 0 5px rgba(0,255,255,0.4);
+}
+
+.vision-block p {
+  color: var(--text-color);
+  line-height: 1.6;
+  font-size: 0.98rem;
+  opacity: 0.9;
+  margin-bottom: 0.25rem;
+}
+
+.vision-divider {
+  width: 2px;
+  height: 14px; /* shorter divider */
+  background: linear-gradient(to bottom, transparent, var(--primary-color), transparent);
+  margin: 0.5rem auto;
+  opacity: 0.5;
+  border-radius: 2px;
+}
+
+/* === Responsive === */
+@media (max-width: 600px) {
+  .vision-main {
+    padding: 0 1rem;
+  }
+
+  .vision-block {
+    padding: 1.25rem;
+  }
+
+  .vision-block h3 {
+    font-size: 1.1rem;
+  }
+}

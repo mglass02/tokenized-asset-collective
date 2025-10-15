@@ -105,14 +105,57 @@
   <script type="text/babel">
     const { useState, useEffect } = React;
 
-    const blocksData = [
-      { id: 'home', hash: '0000...home', title: 'Block 1: Home', content: 'Welcome to Tokenized Asset Collective — the foundation of your blockchain exploration.' },
-      { id: 'about', hash: '1a2b...about', title: 'Block 2: About', file: 'sections/about.html' },
-      { id: 'blog', hash: '3c4d...blog', title: 'Block 3: Blog', file: 'sections/blog.html' },
-      { id: 'tools', hash: '5e6f...tools', title: 'Block 4: Tools', file: 'sections/tools.html' },
-      { id: 'services', hash: '7g8h...services', title: 'Block 5: Services', file: 'sections/services.html' },
-      { id: 'contact', hash: '9i0j...contact', title: 'Block 6: Contact', file: 'sections/contact.html' },
-    ];
+const blocksData = [
+  {
+    id: 'home',
+    hash: '0000...home',
+    title: 'Block 1: Home',
+    content:
+      'Welcome to Tokenized Asset Collective — your gateway to secure, automated digital asset management.'
+  },
+  {
+    id: 'about',
+    hash: '1a2b...about',
+    title: 'Block 2: About',
+    content:
+      'Learn how we’re redefining estate planning through blockchain, trust law, and automation.',
+    file: 'sections/about.html'
+  },
+  {
+    id: 'vision',
+    hash: '5e6f...vision',
+    title: 'Block 3: Vision',
+    content:
+      'We began with one goal — to ensure digital assets reach their rightful heirs seamlessly and securely.',
+    file: 'sections/vision.html'
+  },
+  {
+    id: 'blog',
+    hash: '3c4d...blog',
+    title: 'Block 4: Blog',
+    content:
+      'Read insights on tokenization, digital legacy, and the evolution of real-world asset management.',
+    file: 'sections/blog.html'
+  },
+  {
+    id: 'services',
+    hash: '7g8h...services',
+    title: 'Block 5: Services',
+    content:
+      'Explore our estate management framework for securing and automating asset distribution.',
+    file: 'sections/services.html'
+  },
+  {
+    id: 'contact',
+    hash: '9i0j...contact',
+    title: 'Block 6: Contact',
+    content:
+      'Get in touch to start securing your digital legacy today.',
+    file: 'sections/contact.html'
+  }
+];
+
+
 
     const App = () => {
       const [tokens, setTokens] = useState(0);
@@ -156,22 +199,8 @@
         <div className="relative min-h-screen text-white">
           <header className="text-center py-12 bg-gradient-to-b from-cyan-900/20 to-transparent">
             <h1 className="text-5xl font-bold mb-4">Tokenized Asset Collective</h1>
-            <p className="text-xl mb-6 max-w-2xl mx-auto">Specialist Provider of Tokenization Education, SaaS & Consulting</p>
+            <p className="text-xl mb-6 max-w-2xl mx-auto">Pioneering Digital Estate Planning Solutions</p>
           </header>
-
-          {/* Tokens & Progress */}
-          <div className="fixed top-4 left-4 flex items-center space-x-2 z-10 p-3 rounded-lg">
-            <span className="text-lg">Tokens: {tokens}</span>
-            <button
-              onClick={() => setShowInfo(true)}
-              className="text-cyan-400 border border-cyan-400 rounded-full w-6 h-6 flex items-center justify-center hover:bg-cyan-500 hover:text-black transition"
-              aria-label="Token Info"
-            >
-              i
-            </button>
-          </div>
-
-          <div className="fixed top-4 right-4 text-lg z-10 p-3 rounded-lg">Explored: {progress}%</div>
 
           {/* Block Grid */}
           <div className="flex flex-wrap justify-center gap-8 max-w-5xl mx-auto my-16 p-4">
@@ -185,12 +214,6 @@
                   <span className="text-lg font-bold text-cyan-300">{block.title}</span>
                 </div>
                 <p className="text-sm">{block.content || 'Click to open section'}</p>
-                <button
-                  className={`mt-4 px-6 py-2 rounded-lg ${visited[block.id] ? 'bg-gray-600' : 'bg-cyan-500'} text-black font-semibold`}
-                  disabled={visited[block.id]}
-                >
-                  {visited[block.id] ? 'Validated!' : 'Validate & Earn Token'}
-                </button>
               </div>
             ))}
           </div>
@@ -201,28 +224,6 @@
               <div className="modal-content" onClick={(e) => e.stopPropagation()}>
                 <button className="modal-close" onClick={handleClosePopup}>✕</button>
                 <div className="modal-body" dangerouslySetInnerHTML={{ __html: popupContent }} />
-              </div>
-            </div>
-          )}
-
-          {/* Info Modal */}
-          {showInfo && (
-            <div className="modal" onClick={() => setShowInfo(false)}>
-              <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                <button className="modal-close" onClick={() => setShowInfo(false)}>✕</button>
-                <div className="modal-body text-center">
-                  <h2 className="text-3xl font-bold mb-6">Token Information</h2>
-                  <p className="text-lg mb-8">
-                    Each time you validate a block, you earn a <span className="text-cyan-400">TAC Token</span>.  
-                    Tokens can be used to unlock and access the <strong>Tools</strong> section, where you can experiment with blockchain simulations and utilities.
-                  </p>
-                  <button
-                    className="px-8 py-3 bg-cyan-500 text-black font-semibold rounded-lg hover:bg-cyan-400 transition text-lg"
-                    onClick={() => setShowInfo(false)}
-                  >
-                    Got it
-                  </button>
-                </div>
               </div>
             </div>
           )}
