@@ -8,6 +8,7 @@
     "build": "node build.js"
   },
   "dependencies": {
-    "jsdom": "^24.0.0"
+    "jsdom": "^24.0.0",
+    "nodemon": "^3.1.10"
   }
 }

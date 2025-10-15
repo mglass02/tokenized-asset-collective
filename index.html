@@ -1,43 +1,297 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Tokenized Asset Collective</title>
-  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; overflow-x: hidden; background: #0a0a0a; font-family: 'IBM Plex Sans', sans-serif; }
+    #particle-canvas { position: fixed; top: 0; left: 0; z-index: -1; opacity: 1; }
+    .block { transition: all 0.3s ease; position: relative; font-family: 'IBM Plex Sans', sans-serif;}
+    .block:hover { transform: scale(1.05); box-shadow: 0 0 25px rgba(0, 255, 255, 0.6); }
+    .gradient-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(0, 20, 40, 0.3), rgba(0, 0, 0, 0.8)); z-index: -1; }
+    
+    /* Fixed Modal Styles */
+    .modal { 
+      position: fixed; 
+      inset: 0; 
+      background: rgba(0, 0, 0, 0.95); 
+      backdrop-filter: blur(6px); 
+      display: flex; 
+      justify-content: center; 
+      align-items: center; 
+      z-index: 50; 
+      animation: fadeIn 0.3s ease; 
+      padding: 2rem 1rem;
+    }
+    
+    /* Fixed size popup container with internal scrolling */
+    .modal-content {
+      border: 1px solid #00FFFF;
+      background: rgba(0, 0, 0, 0.9);
+      border-radius: 1rem;
+      max-width: 900px;
+      width: 100%;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    
+    /* Scrollable content area */
+    .modal-body {
+      overflow-y: auto;
+      padding: 2.5rem;
+      color: #A5F3FC;
+      text-align: left;
+      flex: 1;
+    }
+    
+    /* Custom scrollbar */
+    .modal-body::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    .modal-body::-webkit-scrollbar-track {
+      background: rgba(0, 255, 255, 0.1);
+      border-radius: 4px;
+    }
+    
+    .modal-body::-webkit-scrollbar-thumb {
+      background: rgba(0, 255, 255, 0.5);
+      border-radius: 4px;
+    }
+    
+    .modal-body::-webkit-scrollbar-thumb:hover {
+      background: rgba(0, 255, 255, 0.7);
+    }
+    
+    /* Close button fixed at top right */
+    .modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      padding: 0.5rem 1rem;
+      background: #00FFFF;
+      color: #000;
+      font-weight: 600;
+      border-radius: 0.5rem;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 1.125rem;
+      z-index: 10;
+      font-family: 'IBM Plex Sans', sans-serif;
+    }
+    
+    .modal-close:hover {
+      background: #00E5E5;
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+    }
+    
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  </style>
 </head>
 <body>
-  <header class="site-header">
-    <div class="header-container">
-      <h1 class="logo">Tokenized Asset Collective</h1>
-      <p class="subtitle">Guiding you through the evolution of a tokenized economy.</p>
-      <nav class="navigation">
-        <a href="index.html" class="active">Home</a>
-        <a href="about.html">About</a>
-        <a href="blog.html">Blog</a>
-        <a href="services.html">Services</a>
-      </nav>
-    </div>
-  </header>
+  <div id="root"></div>
+  <canvas id="particle-canvas"></canvas>
+  <div class="gradient-overlay"></div>
 
-  <main class="main-content">
-    <section class="hero-section">
-      <h2 class="hero-title">Bridging traditional assets and digital economies.</h2>
-      <p class="hero-tagline">
-        Tokenized Asset Collective delivers education and advisory services for organizations embracing 
-        real-world asset tokenization — with <strong> 15+ corporate initiatives completed </strong> and growing.
-      </p>
-      <p class="cta">
-        To begin your tokenization journey, <a href="services.html" class="cta-link">see our services</a>.
-      </p>
-      <p class="cta">
-        To learn more, <a href="blog.html" class="cta-link">see our blog</a>.
-      </p>
-    </section>
-  </main>
+  <script type="text/babel">
+    const { useState, useEffect } = React;
 
-  <footer class="site-footer">
-    <p>© 2025 Tokenized Asset Collective — All Rights Reserved.</p>
-  </footer>
+    const blocksData = [
+      { id: 'home', hash: '0000...home', title: 'Block 1: Home', content: 'Welcome to Tokenized Asset Collective — the foundation of your blockchain exploration.' },
+      { id: 'about', hash: '1a2b...about', title: 'Block 2: About', file: 'sections/about.html' },
+      { id: 'blog', hash: '3c4d...blog', title: 'Block 3: Blog', file: 'sections/blog.html' },
+      { id: 'tools', hash: '5e6f...tools', title: 'Block 4: Tools', file: 'sections/tools.html' },
+      { id: 'services', hash: '7g8h...services', title: 'Block 5: Services', file: 'sections/services.html' },
+      { id: 'contact', hash: '9i0j...contact', title: 'Block 6: Contact', file: 'sections/contact.html' },
+    ];
+
+    const App = () => {
+      const [tokens, setTokens] = useState(0);
+      const [visited, setVisited] = useState({});
+      const [activePopup, setActivePopup] = useState(null);
+      const [popupContent, setPopupContent] = useState('');
+      const [showInfo, setShowInfo] = useState(false);
+
+      const handleBlockClick = async (blockId) => {
+        const block = blocksData.find(b => b.id === blockId);
+        if (!visited[blockId]) {
+          setTokens(tokens + 1);
+          setVisited({ ...visited, [blockId]: true });
+        }
+        if (block.file) {
+          try {
+            const response = await fetch(block.file);
+            const html = await response.text();
+            setPopupContent(html);
+          } catch (err) {
+            setPopupContent('<p style="color: #ef4444;">Error loading section content.</p>');
+          }
+        } else {
+          setPopupContent(`<p>${block.content}</p>`);
+        }
+        setActivePopup(blockId);
+      };
+
+      const handleClosePopup = () => {
+        setActivePopup(null);
+        setPopupContent('');
+      };
+
+      const progress = Math.round((Object.keys(visited).length / blocksData.length) * 100);
+
+      useEffect(() => {
+        if (progress === 100) alert('Exploration Complete! Full TokenBlock Chain Built.');
+      }, [progress]);
+
+      return (
+        <div className="relative min-h-screen text-white">
+          <header className="text-center py-12 bg-gradient-to-b from-cyan-900/20 to-transparent">
+            <h1 className="text-5xl font-bold mb-4">Tokenized Asset Collective</h1>
+            <p className="text-xl mb-6 max-w-2xl mx-auto">Specialist Provider of Tokenization Education, SaaS & Consulting</p>
+          </header>
+
+          {/* Tokens & Progress */}
+          <div className="fixed top-4 left-4 flex items-center space-x-2 z-10 p-3 rounded-lg">
+            <span className="text-lg">Tokens: {tokens}</span>
+            <button
+              onClick={() => setShowInfo(true)}
+              className="text-cyan-400 border border-cyan-400 rounded-full w-6 h-6 flex items-center justify-center hover:bg-cyan-500 hover:text-black transition"
+              aria-label="Token Info"
+            >
+              i
+            </button>
+          </div>
+
+          <div className="fixed top-4 right-4 text-lg z-10 p-3 rounded-lg">Explored: {progress}%</div>
+
+          {/* Block Grid */}
+          <div className="flex flex-wrap justify-center gap-8 max-w-5xl mx-auto my-16 p-4">
+            {blocksData.map((block) => (
+              <div
+                key={block.id}
+                className="block border border-cyan-400 p-6 bg-cyan-400/10 rounded-lg cursor-pointer w-72 min-h-[160px]"
+                onClick={() => handleBlockClick(block.id)}
+              >
+                <div className="mb-4">
+                  <span className="text-lg font-bold text-cyan-300">{block.title}</span>
+                </div>
+                <p className="text-sm">{block.content || 'Click to open section'}</p>
+                <button
+                  className={`mt-4 px-6 py-2 rounded-lg ${visited[block.id] ? 'bg-gray-600' : 'bg-cyan-500'} text-black font-semibold`}
+                  disabled={visited[block.id]}
+                >
+                  {visited[block.id] ? 'Validated!' : 'Validate & Earn Token'}
+                </button>
+              </div>
+            ))}
+          </div>
+
+          {/* Popup Modal */}
+          {activePopup && (
+            <div className="modal" onClick={handleClosePopup}>
+              <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                <button className="modal-close" onClick={handleClosePopup}>✕</button>
+                <div className="modal-body" dangerouslySetInnerHTML={{ __html: popupContent }} />
+              </div>
+            </div>
+          )}
+
+          {/* Info Modal */}
+          {showInfo && (
+            <div className="modal" onClick={() => setShowInfo(false)}>
+              <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                <button className="modal-close" onClick={() => setShowInfo(false)}>✕</button>
+                <div className="modal-body text-center">
+                  <h2 className="text-3xl font-bold mb-6">Token Information</h2>
+                  <p className="text-lg mb-8">
+                    Each time you validate a block, you earn a <span className="text-cyan-400">TAC Token</span>.  
+                    Tokens can be used to unlock and access the <strong>Tools</strong> section, where you can experiment with blockchain simulations and utilities.
+                  </p>
+                  <button
+                    className="px-8 py-3 bg-cyan-500 text-black font-semibold rounded-lg hover:bg-cyan-400 transition text-lg"
+                    onClick={() => setShowInfo(false)}
+                  >
+                    Got it
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    };
+
+    // Particle Background
+    const initParticleBackground = () => {
+      const canvas = document.getElementById('particle-canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      });
+
+      class Particle {
+        constructor() {
+          this.x = Math.random() * canvas.width;
+          this.y = Math.random() * canvas.height;
+          this.size = Math.random() * 2 + 1;
+          this.speedX = Math.random() * 0.5 - 0.25;
+          this.speedY = Math.random() * 0.5 - 0.25;
+          this.color = '#00FFFF';
+        }
+        update() {
+          this.x += this.speedX;
+          this.y += this.speedY;
+          if (this.x > canvas.width || this.x < 0) this.speedX = -this.speedX;
+          if (this.y > canvas.height || this.y < 0) this.speedY = -this.speedY;
+        }
+        draw() {
+          ctx.fillStyle = this.color;
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      const particles = Array.from({ length: 80 }, () => new Particle());
+
+      const animate = () => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => { p.update(); p.draw(); });
+        particles.forEach((p1, i) => {
+          particles.forEach((p2, j) => {
+            if (i !== j) {
+              const dx = p1.x - p2.x, dy = p1.y - p2.y, dist = Math.sqrt(dx * dx + dy * dy);
+              if (dist < 100) {
+                ctx.beginPath();
+                ctx.strokeStyle = `rgba(0, 255, 255, ${1 - dist / 100})`;
+                ctx.lineWidth = 0.5;
+                ctx.moveTo(p1.x, p1.y);
+                ctx.lineTo(p2.x, p2.y);
+                ctx.stroke();
+              }
+            }
+          });
+        });
+        requestAnimationFrame(animate);
+      };
+      animate();
+    };
+
+    ReactDOM.render(<App />, document.getElementById('root'));
+    initParticleBackground();
+  </script>
 </body>
 </html>
