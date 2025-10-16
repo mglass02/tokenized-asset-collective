@@ -34,3 +34,4 @@ useEffect(() => {
   document.body.addEventListener('click', handleBlogClick);
   return () => document.body.removeEventListener('click', handleBlogClick);
 }, []);
+

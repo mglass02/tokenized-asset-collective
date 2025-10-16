@@ -11,42 +11,56 @@
     --card-bg: #111111;
     --text-color: #E6E8F0;
     --text-muted: #6C7A89;
-    --shadow: 0 10px 25px rgba(0,255,255,0.2);
-    --separator: rgba(0,255,255,0.2);
+    --separator: rgba(0,255,255,0.25);
   }
 
   body {
     margin: 0;
     font-family: 'IBM Plex Sans', sans-serif;
-    background: #0a0a0a;
+    background: radial-gradient(circle at top, #0f0f0f 0%, #000 90%);
     color: var(--text-color);
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+  }
+
+  header {
+    text-align: center;
+    padding: 2rem 1rem 1rem;
+    color: var(--primary-color);
+    font-size: 1.8rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
   }
 
   main {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
-    padding: 1.5rem;
-    max-width: 980px;
-    margin: 0 auto 4rem;
+    gap: 3rem;
+    padding: 2rem 1.5rem 6rem;
+    max-width: 960px;
+    margin: 0 auto;
+    perspective: 1000px;
+    transform-style: preserve-3d;
   }
 
   .blog-article {
     background: var(--card-bg);
     border-radius: 12px;
     padding: 1.5rem;
-    transition: transform 0.2s, box-shadow 0.2s;
     border: 1px solid var(--separator);
+    box-shadow: 0 0 25px rgba(0,255,255,0.05);
+    transform-origin: center;
+    transition: transform 0.4s ease, opacity 0.4s ease, filter 0.4s ease;
   }
 
   .blog-article:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 15px 35px rgba(0,255,255,0.12);
+    transform: scale(1.02);
+    box-shadow: 0 0 40px rgba(0,255,255,0.15);
   }
 
   .blog-article h2 {
-    font-size: 1.18rem;
-    margin: 0 0 0.25rem 0;
+    font-size: 1.25rem;
+    margin: 0 0 0.3rem 0;
     color: var(--primary-color);
   }
 
@@ -56,9 +70,9 @@
   }
 
   .article-date {
-    font-size: 0.82rem;
+    font-size: 0.85rem;
     color: var(--text-muted);
-    margin-bottom: 0.65rem;
+    margin-bottom: 0.8rem;
     display: block;
   }
 
@@ -67,63 +81,29 @@
     color: var(--text-color);
     margin: 0;
     opacity: 0.95;
+    line-height: 1.55;
   }
 
-  .hidden { display: none !important; }
-
-  /* Pagination */
-  .pagination {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0.75rem;
-    margin: 2rem 1rem;
-    flex-wrap: wrap;
-  }
-
-  .pagination button {
-    background: transparent;
-    color: var(--primary-color);
-    border: 1px solid var(--separator);
-    border-radius: 8px;
-    padding: 0.45rem 0.9rem;
-    cursor: pointer;
-    transition: all 0.18s;
-  }
-
-  .pagination button:hover:not(:disabled) {
-    background: var(--primary-color);
-    color: #000;
-  }
-
-  .pagination button:disabled {
-    opacity: 0.35;
-    cursor: default;
-  }
-
-  .page-numbers {
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
-  }
-
-  .page-numbers button.active {
-    background: var(--primary-color);
-    color: #000;
-    font-weight: 700;
+  footer {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    padding: 3rem 1rem;
   }
 
   @media (max-width: 600px) {
-    .blog-article { padding: 1rem; }
-    .pagination { gap: 0.5rem; }
-    .pagination button { padding: 0.35rem 0.6rem; }
+    .blog-article {
+      padding: 1.2rem;
+    }
   }
 </style>
 </head>
 <body>
 
+<header>Tokenization Insights & Research</header>
+
 <main id="blog-list">
-  <!-- === All article entries (keep these in the HTML for SEO ===) -->
+  <!-- === All your blog posts === -->
   <article class="blog-article">
     <h2><a href="blog/rwa-integration-estate-tokenization.html">Integrating Real-World Assets into Digital Estate Tokenization</a></h2>
     <span class="article-date">Oct 16, 2025</span>
@@ -221,82 +201,24 @@
   </article>
 </main>
 
-<!-- Pagination UI -->
-<div class="pagination" aria-label="Blog pagination">
-  <button id="prevBtn">Previous</button>
-
-  <div class="page-numbers" id="pageNumbers"></div>
-
-  <button id="nextBtn">Next</button>
-</div>
+<footer>© 2025 Tokenized Asset Collective</footer>
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-  const articles = Array.from(document.querySelectorAll('.blog-article'));
-  const perPage = 5;
-  let currentPage = 1;
-  const totalPages = Math.max(1, Math.ceil(articles.length / perPage));
+document.addEventListener('scroll', () => {
+  const articles = document.querySelectorAll('.blog-article');
+  const viewportHeight = window.innerHeight;
 
-  const prevBtn = document.getElementById('prevBtn');
-  const nextBtn = document.getElementById('nextBtn');
-  const pageNumbers = document.getElementById('pageNumbers');
+  articles.forEach(article => {
+    const rect = article.getBoundingClientRect();
+    const distanceFromCenter = Math.abs(rect.top + rect.height / 2 - viewportHeight / 2);
+    const scale = Math.max(0.88, 1 - distanceFromCenter / 1000);
+    const opacity = Math.max(0.35, 1 - distanceFromCenter / 500);
+    const blur = Math.min(6, distanceFromCenter / 150);
 
-  function renderPageNumbers() {
-    pageNumbers.innerHTML = '';
-    for (let i = 1; i <= totalPages; i++) {
-      const btn = document.createElement('button');
-      btn.textContent = i;
-      btn.dataset.page = i;
-      btn.className = (i === currentPage) ? 'active' : '';
-      btn.addEventListener('click', () => {
-        currentPage = i;
-        showPage(currentPage);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      });
-      pageNumbers.appendChild(btn);
-    }
-  }
-
-  function showPage(page) {
-    // clamp
-    if (page < 1) page = 1;
-    if (page > totalPages) page = totalPages;
-    currentPage = page;
-
-    const start = (page - 1) * perPage;
-    const end = page * perPage;
-
-    articles.forEach((article, idx) => {
-      article.classList.toggle('hidden', !(idx >= start && idx < end));
-    });
-
-    // update controls
-    prevBtn.disabled = (currentPage === 1);
-    nextBtn.disabled = (currentPage === totalPages);
-
-    // update active page button
-    Array.from(pageNumbers.children).forEach(btn => {
-      btn.classList.toggle('active', Number(btn.dataset.page) === currentPage);
-    });
-  }
-
-  prevBtn.addEventListener('click', () => {
-    if (currentPage > 1) {
-      showPage(currentPage - 1);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+    article.style.transform = `scale(${scale}) translateZ(${-(distanceFromCenter / 6)}px)`;
+    article.style.opacity = opacity;
+    article.style.filter = `blur(${blur}px)`;
   });
-
-  nextBtn.addEventListener('click', () => {
-    if (currentPage < totalPages) {
-      showPage(currentPage + 1);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  });
-
-  // initial render
-  renderPageNumbers();
-  showPage(1);
 });
 </script>
 
