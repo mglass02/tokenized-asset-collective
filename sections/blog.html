@@ -27,6 +27,8 @@
     flex-direction: column;
     gap: 1.5rem;
     padding: 1.5rem;
+    max-width: 980px;
+    margin: 0 auto 4rem;
   }
 
   .blog-article {
@@ -34,17 +36,17 @@
     border-radius: 12px;
     padding: 1.5rem;
     transition: transform 0.2s, box-shadow 0.2s;
-    border: 3px solid var(--separator);
+    border: 1px solid var(--separator);
   }
 
   .blog-article:hover {
     transform: translateY(-4px);
-    box-shadow: 0 15px 35px rgba(0,255,255,0.3);
+    box-shadow: 0 15px 35px rgba(0,255,255,0.12);
   }
 
   .blog-article h2 {
-    font-size: 1.2rem;
-    margin: 0 0 0.3rem 0;
+    font-size: 1.18rem;
+    margin: 0 0 0.25rem 0;
     color: var(--primary-color);
   }
 
@@ -53,182 +55,249 @@
     text-decoration: none;
   }
 
-  .blog-article h2 a:hover {
-    text-decoration: underline;
-  }
-
   .article-date {
-    font-size: 0.8rem;
+    font-size: 0.82rem;
     color: var(--text-muted);
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.65rem;
     display: block;
   }
 
+  .blog-article p {
+    font-size: 0.95rem;
+    color: var(--text-color);
+    margin: 0;
+    opacity: 0.95;
+  }
+
+  .hidden { display: none !important; }
+
+  /* Pagination */
   .pagination {
     display: flex;
     justify-content: center;
-    gap: 1rem;
-    margin: 2rem 0;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 2rem 1rem;
+    flex-wrap: wrap;
   }
 
   .pagination button {
-    background: var(--card-bg);
+    background: transparent;
     color: var(--primary-color);
     border: 1px solid var(--separator);
     border-radius: 8px;
-    padding: 0.5rem 1rem;
+    padding: 0.45rem 0.9rem;
     cursor: pointer;
-    transition: background 0.2s;
+    transition: all 0.18s;
   }
 
-  .pagination button:hover {
+  .pagination button:hover:not(:disabled) {
     background: var(--primary-color);
     color: #000;
   }
 
   .pagination button:disabled {
-    opacity: 0.3;
+    opacity: 0.35;
     cursor: default;
+  }
+
+  .page-numbers {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  .page-numbers button.active {
+    background: var(--primary-color);
+    color: #000;
+    font-weight: 700;
+  }
+
+  @media (max-width: 600px) {
+    .blog-article { padding: 1rem; }
+    .pagination { gap: 0.5rem; }
+    .pagination button { padding: 0.35rem 0.6rem; }
   }
 </style>
 </head>
 <body>
 
 <main id="blog-list">
-    <article class="blog-article">
-      <h2><a href="blog/rwa-integration-estate-tokenization.html">Integrating Real-World Assets into Digital Estate Tokenization</a></h2>
-      <span class="article-date">Oct 16, 2025</span>
-      <p>Explore how tokenized estates now include real-world assets like property and private equity, creating a holistic, on-chain inheritance ecosystem.</p>
-    </article>
+  <!-- === All article entries (keep these in the HTML for SEO ===) -->
+  <article class="blog-article">
+    <h2><a href="blog/rwa-integration-estate-tokenization.html">Integrating Real-World Assets into Digital Estate Tokenization</a></h2>
+    <span class="article-date">Oct 16, 2025</span>
+    <p>Explore how tokenized estates now include real-world assets like property and private equity, creating a holistic, on-chain inheritance ecosystem.</p>
+  </article>
 
-    <article class="blog-article">
-      <h2><a href="blog/crosschain-estate-integration.html">Cross-Chain Estate Integration: Managing Multi-Asset Legacies</a></h2>
-      <span class="article-date">Oct 15, 2025</span>
-      <p>Learn how cross-chain interoperability allows seamless management of multi-network tokenized estates, unifying assets across Ethereum, Bitcoin, and other blockchains.</p>
-    </article>
+  <article class="blog-article">
+    <h2><a href="blog/crosschain-estate-integration.html">Cross-Chain Estate Integration: Managing Multi-Asset Legacies</a></h2>
+    <span class="article-date">Oct 15, 2025</span>
+    <p>Learn how cross-chain interoperability allows seamless management of multi-network tokenized estates, unifying assets across Ethereum, Bitcoin, and other blockchains.</p>
+  </article>
 
-    <article class="blog-article">
-      <h2><a href="blog/estate-tokenization-automation.html">Automating Estate Distribution Through Tokenization</a></h2>
-      <span class="article-date">Oct 14, 2025</span>
-      <p>Discover how blockchain and smart contracts automate estate inheritance, providing faster, transparent, and programmable asset distribution for beneficiaries.</p>
-    </article>
+  <article class="blog-article">
+    <h2><a href="blog/estate-tokenization-automation.html">Automating Estate Distribution Through Tokenization</a></h2>
+    <span class="article-date">Oct 14, 2025</span>
+    <p>Discover how blockchain and smart contracts automate estate inheritance, providing faster, transparent, and programmable asset distribution for beneficiaries.</p>
+  </article>
 
-    <article class="blog-article">
-      <h2><a href="blog/real-estate-tokenization-business-advantage.html">Why Real Estate Firms Should Begin Tokenizing Their Assets</a></h2>
-      <span class="article-date">Oct 13, 2025</span>
-      <p>Learn why tokenization is becoming a strategic priority for real estate firms seeking new capital pathways, investor engagement, and modernized asset management models.</p>
-    </article>
+  <article class="blog-article">
+    <h2><a href="blog/real-estate-tokenization-business-advantage.html">Why Real Estate Firms Should Begin Tokenizing Their Assets</a></h2>
+    <span class="article-date">Oct 13, 2025</span>
+    <p>Learn why tokenization is becoming a strategic priority for real estate firms seeking new capital pathways and modernized asset management models.</p>
+  </article>
 
-    <article class="blog-article">
-      <h2><a href="blog/real-estate-tokenization-challenges.html">Real Estate Tokenization: Overcoming Challenges and Risks in 2025</a></h2>
-      <span class="article-date">Oct 12, 2025</span>
-      <p>Address common challenges in real estate tokenization, including regulatory hurdles, liquidity issues, and technical considerations for successful implementation.</p>
-    </article>
+  <article class="blog-article">
+    <h2><a href="blog/real-estate-tokenization-challenges.html">Real Estate Tokenization: Overcoming Challenges and Risks in 2025</a></h2>
+    <span class="article-date">Oct 12, 2025</span>
+    <p>Address common challenges in real estate tokenization, including regulatory hurdles, liquidity issues, and technical considerations for successful implementation.</p>
+  </article>
 
-    <article class="blog-article">
-      <h2><a href="blog/real-estate-tokenization-benefits.html">Real Estate Tokenization: Unlocking Liquidity and Accessibility in 2025</a></h2>
-      <span class="article-date">Oct 11, 2025</span>
-      <p>Discover the benefits of real estate tokenization, from fractional ownership to global access, and how it transforms property investment.</p>
-    </article>
+  <article class="blog-article">
+    <h2><a href="blog/real-estate-tokenization-benefits.html">Real Estate Tokenization: Unlocking Liquidity and Accessibility in 2025</a></h2>
+    <span class="article-date">Oct 11, 2025</span>
+    <p>Discover the benefits of real estate tokenization, from fractional ownership to global access, and how it transforms property investment.</p>
+  </article>
 
-    <article class="blog-article">
-      <h2><a href="blog/tokenized-capital-markets.html">Tokenized Capital Markets: How Institutional Finance Is Being Rebuilt On-Chain</a></h2>
-      <span class="article-date">Oct 10, 2025</span>
-      <p>Discover how tokenized capital markets are transforming institutional finance through real-world asset tokenization and on-chain efficiency.</p>
-    </article>
+  <article class="blog-article">
+    <h2><a href="blog/tokenized-capital-markets.html">Tokenized Capital Markets: How Institutional Finance Is Being Rebuilt On-Chain</a></h2>
+    <span class="article-date">Oct 10, 2025</span>
+    <p>Discover how tokenized capital markets are transforming institutional finance through real-world asset tokenization and on-chain efficiency.</p>
+  </article>
 
-    <article class="blog-article">
-      <h2><a href="blog/future-of-rwa-tokenization.html">The Future of RWA Tokenization: From Pilot Projects to Global Standards</a></h2>
-      <span class="article-date">Oct 9, 2025</span>
-      <p>Explore the evolution of real-world asset tokenization from experiments to standardized frameworks in blockchain ecosystems.</p>
-    </article>
+  <article class="blog-article">
+    <h2><a href="blog/future-of-rwa-tokenization.html">The Future of RWA Tokenization: From Pilot Projects to Global Standards</a></h2>
+    <span class="article-date">Oct 9, 2025</span>
+    <p>Explore the evolution of real-world asset tokenization from experiments to standardized frameworks in blockchain ecosystems.</p>
+  </article>
 
-    <article class="blog-article">
-      <h2><a href="blog/tokenization-strategy.html">Tokenization Strategy: How to Know if Tokenization Is Right for Your Company</a></h2>
-      <span class="article-date">Oct 8, 2025</span>
-      <p>Learn key strategies for assessing if real-world asset tokenization aligns with your business goals and how to implement it effectively.</p>
-    </article>
+  <article class="blog-article">
+    <h2><a href="blog/tokenization-strategy.html">Tokenization Strategy: How to Know if Tokenization Is Right for Your Company</a></h2>
+    <span class="article-date">Oct 8, 2025</span>
+    <p>Learn key strategies for assessing if real-world asset tokenization aligns with your business goals and how to implement it effectively.</p>
+  </article>
 
-    <article class="blog-article">
-      <h2><a href="blog/industries-and-rwas.html">How Different Industries and Real-World Assets Are Represented in Token Form</a></h2>
-      <span class="article-date">Oct 7, 2025</span>
-      <p>A guide to how industries like real estate and commodities use RWA tokenization for digital representation and liquidity.</p>
-    </article>
+  <article class="blog-article">
+    <h2><a href="blog/industries-and-rwas.html">How Different Industries and Real-World Assets Are Represented in Token Form</a></h2>
+    <span class="article-date">Oct 7, 2025</span>
+    <p>A guide to how industries like real estate and commodities use RWA tokenization for digital representation and liquidity.</p>
+  </article>
 
-    <article class="blog-article">
-      <h2><a href="blog/to-evm-or-not-to-evm.html">To EVM or Not EVM: Comparing Blockchain Ecosystems for Developers and Businesses</a></h2>
-      <span class="article-date">Oct 6, 2025</span>
-      <p>Compare EVM-compatible blockchains vs. alternatives for tokenization projects in 2025.</p>
-    </article>
+  <article class="blog-article">
+    <h2><a href="blog/to-evm-or-not-to-evm.html">To EVM or Not EVM: Comparing Blockchain Ecosystems for Developers and Businesses</a></h2>
+    <span class="article-date">Oct 6, 2025</span>
+    <p>Compare EVM-compatible blockchains vs. alternatives for tokenization projects in 2025.</p>
+  </article>
 
-    <article class="blog-article">
-      <h2><a href="blog/ethereum-polygon-bnb.html">Ethereum, Polygon, or BNB? How to Choose the Best EVM Chain for You in 2025</a></h2>
-      <span class="article-date">Oct 5, 2025</span>
-      <p>Guide to selecting the ideal EVM chain for real-world asset tokenization based on scalability, costs, and use cases.</p>
-    </article>
+  <article class="blog-article">
+    <h2><a href="blog/ethereum-polygon-bnb.html">Ethereum, Polygon, or BNB? How to Choose the Best EVM Chain for You in 2025</a></h2>
+    <span class="article-date">Oct 5, 2025</span>
+    <p>Guide to selecting the ideal EVM chain for real-world asset tokenization based on scalability, costs, and use cases.</p>
+  </article>
 
-    <article class="blog-article">
-      <h2><a href="blog/build-the-app.html">Build the App, Not the Store: Why Creating a Token (Not a Coin) Is the Smarter Move for Your Business</a></h2>
-      <span class="article-date">Oct 4, 2025</span>
-      <p>Why businesses should focus on tokenization over creating new coins for efficient blockchain integration.</p>
-    </article>
+  <article class="blog-article">
+    <h2><a href="blog/build-the-app.html">Build the App, Not the Store: Why Creating a Token (Not a Coin) Is the Smarter Move</a></h2>
+    <span class="article-date">Oct 4, 2025</span>
+    <p>Why businesses should focus on tokenization over creating new coins for efficient blockchain integration.</p>
+  </article>
 
-    <article class="blog-article">
-      <h2><a href="blog/liquidity-layers-in-tokenization.html">Liquidity Layers in Tokenization: How Infrastructure Defines Asset Mobility</a></h2>
-      <span class="article-date">Oct 3, 2025</span>
-      <p>Understand the layers of liquidity in RWA tokenization and how infrastructure enhances asset mobility.</p>
-    </article>
+  <article class="blog-article">
+    <h2><a href="blog/liquidity-layers-in-tokenization.html">Liquidity Layers in Tokenization: How Infrastructure Defines Asset Mobility</a></h2>
+    <span class="article-date">Oct 3, 2025</span>
+    <p>Understand the layers of liquidity in RWA tokenization and how infrastructure enhances asset mobility.</p>
+  </article>
 
-    <article class="blog-article">
-      <h2><a href="blog/digital-securities-vs-tokens.html">Digital Securities vs. Tokens: Where Compliance Meets Innovation</a></h2>
-      <span class="article-date">Oct 2, 2025</span>
-      <p>Comparing digital securities and utility tokens in the context of compliant real-world asset tokenization.</p>
-    </article>
+  <article class="blog-article">
+    <h2><a href="blog/digital-securities-vs-tokens.html">Digital Securities vs. Tokens: Where Compliance Meets Innovation</a></h2>
+    <span class="article-date">Oct 2, 2025</span>
+    <p>Comparing digital securities and utility tokens in the context of compliant real-world asset tokenization.</p>
+  </article>
 
-    <article class="blog-article">
-      <h2><a href="blog/tokenizing-supply-chains.html">Tokenizing Supply Chains: Building Transparent Value Networks in 2025</a></h2>
-      <span class="article-date">Oct 1, 2025</span>
-      <p>How tokenization creates transparent supply chains through blockchain and real-world asset representation.</p>
-    </article>
+  <article class="blog-article">
+    <h2><a href="blog/tokenizing-supply-chains.html">Tokenizing Supply Chains: Building Transparent Value Networks in 2025</a></h2>
+    <span class="article-date">Oct 1, 2025</span>
+    <p>How tokenization creates transparent supply chains through blockchain and real-world asset representation.</p>
+  </article>
 </main>
 
-<div class="pagination">
-  <button id="prevPage">Previous</button>
-  <button id="nextPage">Next</button>
+<!-- Pagination UI -->
+<div class="pagination" aria-label="Blog pagination">
+  <button id="prevBtn">Previous</button>
+
+  <div class="page-numbers" id="pageNumbers"></div>
+
+  <button id="nextBtn">Next</button>
 </div>
 
 <script>
-  const articles = document.querySelectorAll('.blog-article');
+document.addEventListener('DOMContentLoaded', () => {
+  const articles = Array.from(document.querySelectorAll('.blog-article'));
   const perPage = 5;
   let currentPage = 1;
-  const totalPages = Math.ceil(articles.length / perPage);
+  const totalPages = Math.max(1, Math.ceil(articles.length / perPage));
 
-  function showPage(page) {
-    articles.forEach((article, index) => {
-      article.style.display = (index >= (page - 1) * perPage && index < page * perPage) ? 'block' : 'none';
-    });
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const pageNumbers = document.getElementById('pageNumbers');
 
-    document.getElementById('prevPage').disabled = page === 1;
-    document.getElementById('nextPage').disabled = page === totalPages;
+  function renderPageNumbers() {
+    pageNumbers.innerHTML = '';
+    for (let i = 1; i <= totalPages; i++) {
+      const btn = document.createElement('button');
+      btn.textContent = i;
+      btn.dataset.page = i;
+      btn.className = (i === currentPage) ? 'active' : '';
+      btn.addEventListener('click', () => {
+        currentPage = i;
+        showPage(currentPage);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+      pageNumbers.appendChild(btn);
+    }
   }
 
-  document.getElementById('prevPage').addEventListener('click', () => {
+  function showPage(page) {
+    // clamp
+    if (page < 1) page = 1;
+    if (page > totalPages) page = totalPages;
+    currentPage = page;
+
+    const start = (page - 1) * perPage;
+    const end = page * perPage;
+
+    articles.forEach((article, idx) => {
+      article.classList.toggle('hidden', !(idx >= start && idx < end));
+    });
+
+    // update controls
+    prevBtn.disabled = (currentPage === 1);
+    nextBtn.disabled = (currentPage === totalPages);
+
+    // update active page button
+    Array.from(pageNumbers.children).forEach(btn => {
+      btn.classList.toggle('active', Number(btn.dataset.page) === currentPage);
+    });
+  }
+
+  prevBtn.addEventListener('click', () => {
     if (currentPage > 1) {
-      currentPage--;
-      showPage(currentPage);
+      showPage(currentPage - 1);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   });
 
-  document.getElementById('nextPage').addEventListener('click', () => {
+  nextBtn.addEventListener('click', () => {
     if (currentPage < totalPages) {
-      currentPage++;
-      showPage(currentPage);
+      showPage(currentPage + 1);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   });
 
-  showPage(currentPage);
+  // initial render
+  renderPageNumbers();
+  showPage(1);
+});
 </script>
 
 </body>
