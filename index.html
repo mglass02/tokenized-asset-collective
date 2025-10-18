@@ -16,45 +16,48 @@
     .block:hover { transform: scale(1.05); box-shadow: 0 0 25px rgba(0, 255, 255, 0.6); }
     .gradient-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(0, 20, 40, 0.3), rgba(0, 0, 0, 0.8)); z-index: -1; }
     
-    /* Modified Modal Styles */
+    /* Modal Styles Optimized for Mobile */
     .modal { 
       position: fixed; 
       inset: 0; 
-      background: rgba(0, 0, 0, 0.3); /* Reduced opacity for transparency */
-      backdrop-filter: blur(2px); /* Reduced blur for better visibility of particles */
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(2px);
       display: flex; 
       justify-content: center; 
       align-items: center; 
       z-index: 50; 
       animation: fadeIn 0.3s ease; 
-      padding: 2rem 1rem;
+      padding: 1rem;
     }
     
-    /* Fixed size popup container with internal scrolling */
+    /* Responsive Modal Content */
     .modal-content {
       border: 1px solid #00FFFF;
       background: rgba(0, 0, 0, 0.9);
       border-radius: 1rem;
-      max-width: 800px;
-      width: 60%;
-      max-height: 60vh;
+      width: 90%;
+      max-width: 600px;
+      max-height: 80vh;
       display: flex;
       flex-direction: column;
       position: relative;
+      box-sizing: border-box;
     }
     
-    /* Scrollable content area */
+    /* Scrollable Content Area */
     .modal-body {
       overflow-y: auto;
-      padding: 2.5rem;
+      padding: 1.5rem;
       color: #A5F3FC;
       text-align: left;
       flex: 1;
+      font-size: 1rem;
+      line-height: 1.5;
     }
     
-    /* Custom scrollbar */
+    /* Custom Scrollbar */
     .modal-body::-webkit-scrollbar {
-      width: 8px;
+      width: 6px;
     }
     
     .modal-body::-webkit-scrollbar-track {
@@ -71,11 +74,11 @@
       background: rgba(0, 255, 255, 0.7);
     }
     
-    /* Close button fixed at top right */
+    /* Close Button */
     .modal-close {
       position: absolute;
-      top: 1rem;
-      right: 1rem;
+      top: 0.5rem;
+      right: 0.5rem;
       padding: 0.5rem 1rem;
       background: #00FFFF;
       color: #000;
@@ -84,7 +87,7 @@
       border: none;
       cursor: pointer;
       transition: all 0.3s ease;
-      font-size: 1.125rem;
+      font-size: 1rem;
       z-index: 10;
       font-family: 'IBM Plex Sans', sans-serif;
     }
@@ -95,6 +98,32 @@
     }
     
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    /* Media Queries for Small Screens */
+    @media (max-width: 640px) {
+      .modal-content {
+        width: 95%;
+        max-height: 85vh;
+      }
+      .modal-body {
+        padding: 1rem;
+        font-size: 0.9rem;
+      }
+      .modal-close {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.9rem;
+      }
+      .block {
+        width: 100%;
+        max-width: 320px;
+      }
+      header h1 {
+        font-size: 2.5rem;
+      }
+      header p {
+        font-size: 1rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -105,57 +134,55 @@
   <script type="text/babel">
     const { useState, useEffect } = React;
 
-const blocksData = [
-  {
-    id: 'home',
-    hash: '0000...home',
-    title: 'Block 1: Home',
-    content:
-      'Welcome to Tokenized Asset Collective — your gateway to secure, automated digital asset management.'
-  },
-  {
-    id: 'about',
-    hash: '1a2b...about',
-    title: 'Block 2: About',
-    content:
-      'Learn how we’re redefining estate planning through blockchain, trust law, and automation.',
-    file: 'sections/about.html'
-  },
-  {
-    id: 'vision',
-    hash: '5e6f...vision',
-    title: 'Block 3: Vision',
-    content:
-      'We began with one goal — to ensure digital assets reach their rightful heirs seamlessly and securely.',
-    file: 'sections/vision.html'
-  },
-  {
-    id: 'blog',
-    hash: '3c4d...blog',
-    title: 'Block 4: Blog',
-    content:
-      'Read insights on tokenization, digital legacy, and the evolution of real-world asset management.',
-    file: 'sections/blog.html'
-  },
-  {
-    id: 'services',
-    hash: '7g8h...services',
-    title: 'Block 5: State Planning Framework',
-    content:
-      'Explore our estate management framework for securing and automating asset distribution.',
-    file: 'sections/services.html'
-  },
-  {
-    id: 'contact',
-    hash: '9i0j...contact',
-    title: 'Block 6: Contact',
-    content:
-      'Get in touch to start securing your digital legacy today.',
-    file: 'sections/contact.html'
-  }
-];
-
-
+    const blocksData = [
+      {
+        id: 'home',
+        hash: '0000...home',
+        title: 'Block 1: Home',
+        content:
+          'Welcome to Tokenized Asset Collective — your gateway to secure, automated digital asset management.'
+      },
+      {
+        id: 'about',
+        hash: '1a2b...about',
+        title: 'Block 2: About',
+        content:
+          'Learn how we’re redefining estate planning through blockchain, trust law, and automation.',
+        file: 'sections/about.html'
+      },
+      {
+        id: 'vision',
+        hash: '5e6f...vision',
+        title: 'Block 3: Vision',
+        content:
+          'We began with one goal — to ensure digital assets reach their rightful heirs seamlessly and securely.',
+        file: 'sections/vision.html'
+      },
+      {
+        id: 'blog',
+        hash: '3c4d...blog',
+        title: 'Block 4: Blog',
+        content:
+          'Read insights on tokenization, digital legacy, and the evolution of real-world asset management.',
+        file: 'sections/blog.html'
+      },
+      {
+        id: 'services',
+        hash: '7g8h...services',
+        title: 'Block 5: State Planning Framework',
+        content:
+          'Explore our estate management framework for securing and automating asset distribution.',
+        file: 'sections/services.html'
+      },
+      {
+        id: 'contact',
+        hash: '9i0j...contact',
+        title: 'Block 6: Contact',
+        content:
+          'Get in touch to start securing your digital legacy today.',
+        file: 'sections/contact.html'
+      }
+    ];
 
     const App = () => {
       const [tokens, setTokens] = useState(0);
@@ -190,10 +217,6 @@ const blocksData = [
       };
 
       const progress = Math.round((Object.keys(visited).length / blocksData.length) * 100);
-
-      useEffect(() => {
-        if (progress === 100) alert('Exploration Complete! Full TokenBlock Chain Built.');
-      }, [progress]);
 
       return (
         <div className="relative min-h-screen text-white">
